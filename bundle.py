@@ -3,6 +3,7 @@ import os
 import shutil
 import json
 from git import Repo
+from tqdm import tqdm
 
 def gif_path(name):
     return "{0}/{1}.gif".format(config.output_gif_dir, name.replace(' ', '_'))
@@ -27,7 +28,7 @@ def config_for_name(name):
 def people_config(dir):
     people = []
     dir_path = os.path.join(config.showreel_dir, dir)
-    for file in os.listdir(dir_path):
+    for file in tqdm(os.listdir(dir_path)):
         file_path = os.path.join(dir_path, file)
         name = name_from_file(file)
         people.append(config_for_name(name))
@@ -86,18 +87,18 @@ def bundle_with_config(tablet_config):
         os.makedirs(video_dir, exist_ok=True)
         os.makedirs(gif_dir, exist_ok=True)
         input_video_dir = os.path.join(config.showreel_dir, str(tablet_config['id']))
-        for file in os.listdir(input_video_dir):
+        for file in tqdm(os.listdir(input_video_dir)):
             file_path = os.path.join(input_video_dir, file)
             shutil.copy2(file_path, video_dir)
         dump_config(tablet_config, output_dir)
 
 def bundle_people():
-    for dir in os.listdir(config.showreel_dir):
+    for dir in tqdm(os.listdir(config.showreel_dir)):
         tconfig = tablet_config(dir)
         bundle_with_config(tconfig)
 
 def bundle_animations():
-    for file in os.listdir(config.animation_dir):
+    for file in tqdm(os.listdir(config.animation_dir)):
         aconfig = animation_config(file)
         bundle_with_config(aconfig)
 
