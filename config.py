@@ -1,6 +1,6 @@
 import os
 
-git_url = 'https://github.com/funiel/hexplayer'
+git_url = 'https://github.com/Hexabition/hexplayer'
 showreel_dir = os.path.abspath("showreels/")
 gif_dir = os.path.abspath("gifs/")
 animation_dir = os.path.abspath("animations/")
